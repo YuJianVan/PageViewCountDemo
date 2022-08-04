@@ -26,7 +26,7 @@ public class ViewCountService {
         }
     }
 
-    public void ViewCountIncrement(Integer id){
-        redisTemplate.opsForHash().increment("view_count",String.valueOf(id),1);
+    public void ViewCountIncrement(String id){
+        redisTemplate.opsForHash().increment("view_count",id,1);
     }
 }
