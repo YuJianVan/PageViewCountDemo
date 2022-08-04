@@ -1,12 +1,12 @@
 package com.fyj.pageviewcountdemo.service.Impl;
 
 import com.fyj.pageviewcountdemo.mapper.PageMapper;
-import com.fyj.pageviewcountdemo.service.ViewCountService;
+import com.fyj.pageviewcountdemo.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ViewCountServiceImpl implements ViewCountService {
+public class PageServiceImpl implements PageService {
     @Autowired(required = false)
     private PageMapper pageMapper;
 
@@ -14,4 +14,5 @@ public class ViewCountServiceImpl implements ViewCountService {
     public int getViewCount(String id) {
         return pageMapper.getViewCountById(id);
     }
+
 }
