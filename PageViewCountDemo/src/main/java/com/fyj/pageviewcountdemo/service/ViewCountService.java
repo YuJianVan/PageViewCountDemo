@@ -1,5 +1,5 @@
 package com.fyj.pageviewcountdemo.service;
 
 public interface ViewCountService {
-    int getViewCount();
+    int getViewCount(String id);
 }
