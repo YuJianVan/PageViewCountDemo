@@ -11,4 +11,6 @@ public interface PageMapper {
     Integer getViewCountById(@Param("id") String id);
 
     List<Page> getPageInfoList();
+
+    Integer updatePageView(List<Page>list);
 }
