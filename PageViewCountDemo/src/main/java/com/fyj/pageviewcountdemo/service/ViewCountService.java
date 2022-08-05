@@ -7,7 +7,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -22,7 +21,7 @@ public class ViewCountService {
     public void initViewCount(){
         List<Page>list=pageMapper.getPageInfoList();
         for(Page page:list){
-            redisTemplate.opsForHash().put("view_count", String.valueOf(page.getId()),String.valueOf(page.getPageView()));
+            redisTemplate.opsForHash().put("view_count", String.valueOf(page.getId()),page.getPageView());
         }
     }
 
