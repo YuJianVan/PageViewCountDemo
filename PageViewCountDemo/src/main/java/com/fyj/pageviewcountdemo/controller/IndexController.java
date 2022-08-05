@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class IndexController {
     @Autowired
-    PageService pageService;
+    private PageService pageService;
 
     @GetMapping("index")
     public String index(){

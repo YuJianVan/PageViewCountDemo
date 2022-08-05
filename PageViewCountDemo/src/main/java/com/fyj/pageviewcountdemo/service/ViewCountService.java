@@ -15,14 +15,14 @@ public class ViewCountService {
     @Autowired
     private PageMapper pageMapper;
 
-    @Autowired(required = false)
+    @Autowired
     private RedisTemplate redisTemplate;
 
     @PostConstruct
     public void initViewCount(){
         List<Page>list=pageMapper.getPageInfoList();
         for(Page page:list){
-            redisTemplate.opsForHash().put("view_count", String.valueOf(page.getId()),String.valueOf(page.getPageView()));
+            redisTemplate.opsForHash().put("view_count", page.getId(),page.getPageView());
         }
     }
 
