@@ -16,9 +16,6 @@ public class ViewCountService {
     private PageMapper pageMapper;
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
-
-    @Autowired
     private RedisTemplate redisTemplate;
 
     @PostConstruct
@@ -27,10 +24,5 @@ public class ViewCountService {
         for(Page page:list){
             redisTemplate.opsForHash().put("view_count", String.valueOf(page.getId()),page.getPageView());
         }
-    }
-
-    public void ViewCountIncrement(String id){
-        redisTemplate.opsForHash().increment("view_count",id,1);
-        rabbitTemplate.convertAndSend("pv-topic-exchange","pv.update","redis更新啦");
     }
 }
