@@ -22,7 +22,7 @@ public class ViewCountService {
     public void initViewCount(){
         List<Page>list=pageMapper.getPageInfoList();
         for(Page page:list){
-            redisTemplate.opsForHash().put("view_count", page.getId(),page.getPageView());
+            redisTemplate.opsForHash().put("view_count", String.valueOf(page.getId()),String.valueOf(page.getPageView()));
         }
     }
 

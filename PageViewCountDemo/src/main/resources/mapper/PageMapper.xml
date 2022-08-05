@@ -7,8 +7,13 @@
         SELECT page_view FROM t_page where id = #{id};
     </select>
 
-    <select id="getPageInfoList" resultType="com.fyj.pageviewcountdemo.entity.Page">
+    <select id="getPageInfoList" resultMap="MyMap">
         SELECT * FROM t_page;
     </select>
+
+    <resultMap id="MyMap" type="com.fyj.pageviewcountdemo.entity.Page">
+        <id column="id" property="id" ></id>
+        <result column="page_view" property="pageView"></result>
+     </resultMap>
 
 </mapper>

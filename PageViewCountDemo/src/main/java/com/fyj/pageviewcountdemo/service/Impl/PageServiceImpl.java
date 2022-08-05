@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PageServiceImpl implements PageService {
-    @Autowired(required = false)
+    @Autowired
     private PageMapper pageMapper;
 
     @Autowired
     private ViewCountService viewCountService;
 
     @Override
-    public int getViewCount(String id) {
+    public Integer getViewCount(String id) {
         viewCountService.ViewCountIncrement(id);
         return pageMapper.getViewCountById(id);
     }
