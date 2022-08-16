@@ -1,5 +1,6 @@
 package com.fyj.pageviewcountdemo.service.Impl;
 
+import com.fyj.pageviewcountdemo.config.MqQueueConstant;
 import com.fyj.pageviewcountdemo.mapper.PageMapper;
 import com.fyj.pageviewcountdemo.service.PageService;
 import com.fyj.pageviewcountdemo.service.ViewCountService;
@@ -27,7 +28,11 @@ public class PageServiceImpl implements PageService {
 
     public void viewCountIncrement(String id){
         redisTemplate.opsForHash().increment("view_count",id,1);
-        rabbitTemplate.convertAndSend("pv-topic-exchange","pv.update","redis更新啦");
+        rabbitTemplate.convertAndSend(MqQueueConstant.DELAY_EXCHANGE_NAME, MqQueueConstant.DELAY_QUEUE_ROUTING_KEY, id, a ->{
+            a.getMessageProperties().setExpiration(String.valueOf(10000));
+            return a;
+        });
+        //rabbitTemplate.convertAndSend("pv-topic-exchange","pv.update","redis更新啦");
     }
 
 }
