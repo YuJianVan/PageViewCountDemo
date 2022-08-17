@@ -25,8 +25,6 @@ public class PageServiceImpl implements PageService {
 
     @Override
     public Integer getViewCount(String id) {
-        /*viewCountIncrement(id);
-        return pageMapper.getViewCountById(id);*/
         return (Integer)redisTemplate.opsForHash().get("view_count",id);
     }
 
