@@ -10,10 +10,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 死信队列消费者
@@ -26,6 +24,11 @@ public class DeadLetterQueueConsumer {
 
     @Autowired
     private PageMapper pageMapper;
+
+    //private ConcurrentHashMap<Integer,Long>map=new ConcurrentHashMap<>();
+    private Long lastUpdateTime=0L;
+
+    private static final Integer UPDATE_THRESHOLD=10000;
     /**
      * 指定时间处理逻辑
      * @param message
@@ -35,6 +38,15 @@ public class DeadLetterQueueConsumer {
     public void receive(Message message){
         String msg = new String(message.getBody());
         log.info("当前时间：{},死信队列收到消息：{}", new Date().toString(), msg);
+        Long curTime=System.currentTimeMillis();
+        if(curTime-lastUpdateTime>=UPDATE_THRESHOLD){
+            updateViewCount();
+            lastUpdateTime=System.currentTimeMillis();
+            log.info("已全量更新浏览量");
+        }
+    }
+
+    public void updateViewCount(){
         // 遍历redis中阅读量数据，写入数据库
         Map<Object, Object> countMap = redisTemplate.opsForHash().entries("view_count");
         List<Page> list=new ArrayList<>();
