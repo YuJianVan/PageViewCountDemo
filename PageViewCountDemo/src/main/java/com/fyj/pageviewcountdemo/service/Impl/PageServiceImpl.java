@@ -14,9 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class PageServiceImpl implements PageService {
-    @Autowired
-    private PageMapper pageMapper;
-
     @Autowired(required = false)
     private RabbitTemplate rabbitTemplate;
 

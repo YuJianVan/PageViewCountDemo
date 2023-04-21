@@ -29,4 +29,9 @@ class PageViewCountDemoApplicationTests {
             return a;
         });
     }
+
+    @Test
+    void test(){
+
+    }
 }
